@@ -27,14 +27,14 @@ def cambiar(id, usuario_id):
         
         if fila:
             funciones.borrarPantalla()
-            print("\n\tNota a modificar: \U0001F501\n")
+            print("\n\t\U0001F501 Nota a modificar: \n")
             print(f"{'ID':<10}{'ID de usuario':<15}{'Titulo':<15}{'Descripcion':<15}{'Fecha':<15}")
             print("-" * 80)
             print(f"{fila[0]:<10}{fila[1]:<15}{fila[2]:<15}{fila[3]:<15}{fila[4]}")
             print("-" * 80)
             
-            seguro = input("¿Seguro que deseas modificar este registro? (si/no): ")
-            if seguro.lower() == "si":
+            seguro = input("¿Seguro que deseas modificar este registro? (si/no): ").lower().strip()
+            if seguro == "si":
                 titulo = input("\t Nuevo título: ")
                 descripcion = input("\t Nueva descripción: ")
                 cursor.execute(
@@ -80,19 +80,19 @@ def cambiar(id, usuario_id):
     
 def borrar (id, usuario_id):
     try:
-        cursor.execute("Select * from  notas where id=%s and usuario_id",(id, usuario_id))
+        cursor.execute("Select * from notas where id=%s and usuario_id=%s",(id, usuario_id))
         registros=cursor.fetchall()
         if registros:
             funciones.borrarPantalla()
-            print("\n\tNota a eliminar: \U0001F4DB\n")
+            print("\n\t\U0001F4DB Nota a eliminar: \n")
             print(f"{"ID":<10}{"ID de usuario":<15}{"Titulo":<15}{"Descripcion":<15}{"Fecha":<15}")
             print(f"-"*80)
             for fila in registros:
                 print(f"{fila[0]:<10}{fila[1]:<15}{fila[2]:<15}{fila[3]:<15}{fila[4]}")
             print(f"-"*80)   
-            seguro=input("Seguro de borrar este registro? (si/no)")
+            seguro=input("Seguro de borrar este registro? (si/no) ").lower().strip()
             if seguro=="si":
-                cursor.execute("delete from  notas where id=%s and usuario_id=%s",(id, usuario_id))
+                cursor.execute("delete from notas where id=%s and usuario_id=%s",(id, usuario_id))
                 conexion.commit()
                 return True
             else:    
